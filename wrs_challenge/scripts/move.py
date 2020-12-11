@@ -12,7 +12,7 @@ if __name__=='__main__':
 
     try:
         # 視線を少し下げる
-        utils.move_head_tilt(-0.4)
+        utils.move_head_tilt(-0.5)
     except:
         rospy.logerr('fail to init')
         sys.exit()
