@@ -23,7 +23,7 @@ if __name__=='__main__':
         # 長テーブルの前に移動
         utils.move_base_goal(1, 0.5, 90)
     except:
-        rospy.logerr('fail to move')
+        rospy.logerr('failed to move')
         sys.exit()
 
     try:
