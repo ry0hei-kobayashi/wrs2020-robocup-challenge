@@ -14,7 +14,7 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 
 #import cv2
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from utils import *
 #rospy.init_node("arm")
 
@@ -31,20 +31,20 @@ if __name__=='__main__':
 	    rgbd = RGBD()
 	    
 	    utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
-	    utils.move_head_tilt(-1)
+	    utils.move_head_tilt(+1)
 	    
 	    image_data = rgbd.get_image()
-	    plt.imshow(image_data)
+	    #plt.imshow(image_data)
 	    image_data.shape
 	    #image_data[0][0]
 	    
 	    points_data = rgbd.get_points()
-	    plt.imshow(points_data['z'])
+	    #plt.imshow(points_data['z'])
 	    points_data['z'].shape
 	   # points_data['z'][0][0]
 	    
 	    h_image = rgbd.get_h_image()
-	    plt.imshow(h_image)
+	    #plt.imshow(h_image)
 	    
 	
 	    #from ipywidgets import interact
@@ -57,9 +57,9 @@ if __name__=='__main__':
 	    
 
     
-	    rgbd.set_h(110,160)       
+	    rgbd.set_h(120,150)       
 	    region = rgbd.get_region()
-	    plt.imshow(region)
+	    #plt.imshow(region)
 	    rgbd.get_xyz()
 	    rgbd.set_coordinate_name("lego")
 	    trans = get_relative_coordinate("map", "lego")
@@ -96,7 +96,7 @@ if __name__=='__main__':
 
 
     try:
-	    target_joints = {'arm_flex_joint': 0.0, 'arm_lift_joint': 0.0, 'arm_roll_joint': 0.0, 		'head_pan_joint': 0.0, 'head_tilt_joint': 0.0, 'wrist_flex_joint': 0.0, 'wrist_roll_joint': 0.0}
+	    target_joints = {'arm_flex_joint': 0.2, 'arm_lift_joint': 0.2, 'arm_roll_joint': 0.0, 		'head_pan_joint': 0.0, 'head_tilt_joint': 0.0, 'wrist_flex_joint': 0.0, 'wrist_roll_joint': 0.0}
 	    utils.arm.go(target_joints,wait=True)
 	    utils.arm.stop()
 	    utils.arm.clear_pose_targets()
