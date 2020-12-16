@@ -14,7 +14,8 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 
 #import cv2
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+import numpy as np
 from utils import *
 #rospy.init_node("arm")
 
@@ -28,26 +29,28 @@ if __name__=='__main__':
 
     try:
 	    
-	    rgbd = RGBD()
+        rgbd = RGBD()
 	    
-	    utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
-	    utils.move_head_tilt(+1)
+	utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
+	utils.move_head_tilt(-1)
 	    
-	    image_data = rgbd.get_image()
-	    #plt.imshow(image_data)
-	    image_data.shape
-	    #image_data[0][0]
+	image_data = rgbd.get_image()
+	plt.imshow(image_data)
+	image_data.shape
+	#image_data[0][0]
 	    
-	    points_data = rgbd.get_points()
-	    #plt.imshow(points_data['z'])
-	    points_data['z'].shape
-	   # points_data['z'][0][0]
-	    
-	    h_image = rgbd.get_h_image()
-	    #plt.imshow(h_image)
-	    
-	
-	    #from ipywidgets import interact
+	points_data = rgbd.get_points()
+	plt.imshow(points_data['z'])
+	points_data['z'].shape
+	#points_data['z'][0][0]
+
+        h_image = rgbd.get_h_image()
+        plt.imshow(h_image)
+        plt.show()
+        #rgbd.get_h_image()
+
+
+	#from ipywidgets import interact
 		
 	    #def f(lower = 0, upper = 255):
     	#        yellow_region = (h_image > lower) & (h_image < upper)
@@ -57,23 +60,23 @@ if __name__=='__main__':
 	    
 
     
-	    rgbd.set_h(120,150)       
-	    region = rgbd.get_region()
-	    #plt.imshow(region)
-	    rgbd.get_xyz()
-	    rgbd.set_coordinate_name("lego")
-	    trans = get_relative_coordinate("map", "lego")
-	    x = trans.translation.x
-	    y = trans.translation.y
-	    x, y
-
-	    utils.move_hand(1)
-	    utils.move_wholebody_ik(x, y, 0.1, 180, 0, 0)
-	    utils.move_hand(0)
-	    utils.move_arm_init()
+	rgbd.set_h(120,150)       
+	region = rgbd.get_region()
+	plt.imshow(region)
+	rgbd.get_xyz()
+	rgbd.set_coordinate_name("lego")
+	trans = get_relative_coordinate("map", "lego")
+	x = trans.translation.x
+	y = trans.translation.y
+	x, y
+        
+	utils.move_hand(1)
+	utils.move_wholebody_ik(x, y, 0.1, 180, 0, 0)
+	utils.move_hand(0)
+	utils.move_arm_init()
 
     except:
-        rospy.logerr('fail to init 0')
+        rospy.logerr('fail to init 1')
         sys.exit()
 
     try:
@@ -96,7 +99,7 @@ if __name__=='__main__':
 
 
     try:
-	    target_joints = {'arm_flex_joint': 0.2, 'arm_lift_joint': 0.2, 'arm_roll_joint': 0.0, 		'head_pan_joint': 0.0, 'head_tilt_joint': 0.0, 'wrist_flex_joint': 0.0, 'wrist_roll_joint': 0.0}
+	    target_joints = {'arm_flex_joint': 0.0, 'arm_lift_joint': 0.0, 'arm_roll_joint': 0.0, 		'head_pan_joint': 0.0, 'head_tilt_joint': 0.0, 'wrist_flex_joint': 0.0, 'wrist_roll_joint': 0.0}
 	    utils.arm.go(target_joints,wait=True)
 	    utils.arm.stop()
 	    utils.arm.clear_pose_targets()
@@ -166,5 +169,5 @@ if __name__=='__main__':
         #utils.delete_object("e_lego_duplo")
         utils.move_base_goal(0, 0, 0)
     except:
-        
+        rospy.logerr('fail to move')
         sys.exit()
