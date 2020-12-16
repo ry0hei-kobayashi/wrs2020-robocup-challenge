@@ -8,7 +8,7 @@ rospy.init_node('move')
 #from utils import *
 import utils
 import time
-import moveit_commander
+#import moveit_commander
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 
@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 from utils import *
 #rospy.init_node("arm")
 
-#import matplotlib.pyplot as plt
-#import rospy
+import matplotlib.pyplot as plt
+import rospy
 #import rospyimport matplotlib.pyplot as plt
 import tf
 #from utils import *
@@ -81,14 +81,7 @@ if __name__=='__main__':
         rospy.logerr('fail to init')
         sys.exit()
 
-    try:
-        utils.move_base_goal(1.8, -0.1, -90)
-    except:
-        rospy.logerr('fail to move')
-        sys.exit()
-    
-    #try:
-	#utils.move_head_tilt(-0.5)
+    #try:stils.move_head_tilt(-0.5)
         #utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
         #utils.move_hand(1.0)
         #utils.move_wholebody_ik(0.45, -0.05, 0.1, 180, 0, 0)
@@ -100,6 +93,7 @@ if __name__=='__main__':
         #sys.exit()
 
     try:
+	
         utils.move_arm_neutral()
         utils.move_hand(1)
         time.sleep(2)
@@ -111,7 +105,14 @@ if __name__=='__main__':
         sys.exit()
 
     try:
+        utils.move_arm_init()
         utils.move_base_goal(1, 0.5, 90)
+    except:
+        rospy.logerr('failed to move')
+        sys.exit()
+
+    try:
+        
         utils.move_arm_neutral()
         utils.move_head_tilt(-1)
         utils.move_hand(1)
@@ -130,16 +131,8 @@ if __name__=='__main__':
         sys.exit()
 
 
-    try: 
-        utils.move_arm_init()
-        utils.move_base_goal(1.8, -0.1, -90)
-        utils.move_arm_neutral()
-        utils.move_hand(1)
-    except:
-        rospy.logerr('fail to move')
-        sys.exit()
-
     try:
+        utils.move_hand(1)
         time.sleep(2)
         utils.move_hand(0)
         utils.move_arm_init()
@@ -159,5 +152,5 @@ if __name__=='__main__':
         utils.delete_object("e_lego_duplo")
         utils.move_base_goal(0, 0, 0)
     except:
-        
+        print("first_state")
         sys.exit()

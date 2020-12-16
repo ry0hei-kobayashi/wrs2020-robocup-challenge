@@ -8,7 +8,7 @@ rospy.init_node('move')
 #from utils import *
 import utils
 import time
-import moveit_commander
+#import moveit_commander
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 
@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 from utils import *
 #rospy.init_node("arm")
 
-#import matplotlib.pyplot as plt
-#import rospy
+import matplotlib.pyplot as plt
+import rospy
 #import rospyimport matplotlib.pyplot as plt
 import tf
 #from utils import *
