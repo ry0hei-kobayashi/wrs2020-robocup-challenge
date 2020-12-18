@@ -13,10 +13,11 @@ import moveit_commander
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 
-#import cv2
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from utils import *
+from geometry_msgs.msg import Twist
 #rospy.init_node("arm")
 
 import tf
@@ -25,47 +26,66 @@ import tf
 #from ipywidgets import interact
 
 
+
+
 if __name__=='__main__':
 
+    #laser = Laser()
+    #scan_data = laser.get_data()
+    #scan_data.ranges[360]
+    
+    #while True:
+        #scan_data = laser.get_data()
+        #if scan_data.ranges[360] < 1.0:
+            #utils.move_base_vel(0.5,0,0)
+            #break
+        
+   
+        
     try:
-	    
+        #utils.move_base_vel(0,0,0)
         rgbd = RGBD()
-	    
-	utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
-	utils.move_head_tilt(-1)
-	    
+        utils.put_object("e_lego_duplo", 0.4, 0.0, 0.0)
+        utils.move_head_tilt(-1)
 	image_data = rgbd.get_image()
 	plt.imshow(image_data)
 	image_data.shape
 	#image_data[0][0]
-	    
 	points_data = rgbd.get_points()
-	plt.imshow(points_data['z'])
+	#plt.imshow(points_data['z'])
 	points_data['z'].shape
 	#points_data['z'][0][0]
 
         h_image = rgbd.get_h_image()
-        plt.imshow(h_image)
-        plt.show()
+        #plt.imshow(h_image)
+        #rgbd.get_xyz()
+        #print(rgbd.get_xyz())
+        #plt.show()
         #rgbd.get_h_image()
 
 
 	#from ipywidgets import interact
 		
-	    #def f(lower = 0, upper = 255):
-    	#        yellow_region = (h_image > lower) & (h_image < upper)
-    	#        plt.imshow(yellow_region)
-	
-        #    interact(f, lower=(0, 255, 5), upper=(0, 255, 5))
+	#def f(lower = 0, upper = 255):
+    	#yellow_region = (h_image > lower) & (h_image < upper)
+    	#plt.imshow(yellow_region)
+	#interact(f, lower=(0, 255, 5), upper=(0, 255, 5))
 	    
 
     
-	rgbd.set_h(120,150)       
+	rgbd.set_h(133,135,0,0,0,0)
+        rgbd.set_s(,)
+        rgbd.set_v(,)
 	region = rgbd.get_region()
 	plt.imshow(region)
 	rgbd.get_xyz()
-	rgbd.set_coordinate_name("lego")
-	trans = get_relative_coordinate("map", "lego")
+        print(rgbd.get_xyz())
+        img_BGR = cv2.imread("image_data")
+
+        plt.show()
+        rgbd.set_coordinate_name("lego")
+
+        trans = get_relative_coordinate("map", "lego")
 	x = trans.translation.x
 	y = trans.translation.y
 	x, y

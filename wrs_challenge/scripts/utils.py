@@ -336,6 +336,11 @@ class RGBD():
         self._region = None
         self._h_min = 0
         self._h_max = 0
+        self._s_min = 0
+        self._s_min = 0
+        self._v_min = 0
+        self._v_max = 0
+        
         self._xyz = [0, 0, 0]
         self._frame_name = None
 
@@ -348,12 +353,13 @@ class RGBD():
             self._points_data['rgb'].view((np.uint8, 4))[..., [2, 1, 0]]
 
         # 色相画像を作成する
-        hsv_image = cv2.cvtColor(self._image_data, cv2.COLOR_RGB2HSV_FULL)
-        self._h_image = hsv_image[..., 0]
+        hsv_image = cv2.cvtColor(hsv_image_data, cv2.COLOR_RGB2HSV_FULL)
+        self._h_image = hsv_image[...,0]
+        self._s_image = hsv_image[...,1]
+        self._v_image = hsv_image[...,2]
 
         # 色相の閾値内の領域を抽出する
-        self._region = \
-            (self._h_image > self._h_min) & (self._h_image < self._h_max)
+        self._region = (self._h_image > self._h_min) & (self._h_image < self._h_max) & (self._s_image > self._s_min) & (self._s_image < self._s_max) & (self._v_image > self._v_min) & (self._v_image < self._v_max)
 
         # 領域がなければ処理を終える
         if not np.any(self._region):
@@ -397,10 +403,14 @@ class RGBD():
         u"""抽出領域から計算されたxyzを取得する関数"""
         return self._xyz
 
-    def set_h(self, h_min, h_max):
+    def set_h(self, h_min, h_max , s_min, s_max, v_max ,v_min):
         u"""色相の閾値を設定する関数"""
         self._h_min = h_min
         self._h_max = h_max
+        self._s_max = s_max
+        self._s_min = s_min
+        self._v_max = v_max
+        self._v_min = v_min
 
     def set_coordinate_name(self, name):
         u"""座標の名前を設定する関数"""
