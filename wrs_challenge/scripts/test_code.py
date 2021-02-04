@@ -120,3 +120,26 @@ if __name__=='__main__':
     except:
         rospy.logerr('fail to move')
         sys.exit()
+
+    try:
+        time.sleep(2)
+        utils.move_hand(0)
+        utils.move_arm_init()
+
+    except:
+        rospy.logerr('fail to move')
+        sys.exit()
+    
+    try:
+        utils.move_base_goal(0.85, 4.0, 180)
+
+    except:
+        rospy.logerr('fail to move')
+        sys.exit()
+
+    try:
+        #utils.delete_object("e_lego_duplo")
+        utils.move_base_goal(0, 0, 0)
+    except:
+        rospy.logerr('fail to move')
+        sys.exit()
